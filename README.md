@@ -5,10 +5,19 @@ The database consists of 49 512*512 image pairs and was split into 43 and 6 trai
 ![alt text](https://github.com/babajide07/Cell-Nuclei-Segmentation-from-Histology-images-using-Conditional-Generative-Adversarial-Network-/blob/master/Results/Slide_11_11_2.png).
 
 ## Baseline
-The baseline architecture was U-Net: [Convolutional Networks for Biomedical Image Segmentation](https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/).
+The baseline architecture was U-Net: [Convolutional Networks for Biomedical Image Segmentation](https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/). The model was trained for 200 epochs using binary crossentropy loss. The dice similarity coefficient was 0.637.
+
 ## GAN-based Segmentation
 ![alt text](https://github.com/babajide07/Cell-Nuclei-Segmentation-from-Histology-images-using-Conditional-Generative-Adversarial-Network-/blob/master/Results/gan_image.png)
 
+## Dependencies
+. Pytorch >= 0.4.0
+. Python >= 3.5
+. Numpy 
+
+
+Run main.py
+You will see the predicted results of test image in data/membrane/test
 ## Results
 ### Qualitative
 ![alt text](https://github.com/babajide07/Cell-Nuclei-Segmentation-from-Histology-images-using-Conditional-Generative-Adversarial-Network-/blob/master/Results/results.png)
