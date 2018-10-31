@@ -7,7 +7,7 @@ The database consists of 49 512*512 image pairs and was split into 43 and 6 trai
 ## Baseline
 The baseline architecture was U-Net: [Convolutional Networks for Biomedical Image Segmentation](https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/). The model was trained for 200 epochs using binary crossentropy loss. The dice similarity coefficient was 0.637.
 
-## GAN-based Segmentation
+## cGAN-based Segmentation
 ![alt text](https://github.com/babajide07/Cell-Nuclei-Segmentation-from-Histology-images-using-Conditional-Generative-Adversarial-Network-/blob/master/Results/gan_image.png)
 
 ## Results
