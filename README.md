@@ -3,7 +3,8 @@ Pytorch Implementation
 
 ![alt text](https://github.com/babajide07/Cell-Nuclei-Segmentation-from-Histology-images-using-Conditional-Generative-Adversarial-Network-/blob/master/Results/gan_image.png)
 
-| First Header  | Second Header |
+| Model  | Dice Measure |
 | ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+| Unet with no data augmentation  | 0.637  |
+|  Unet with data augmentation  | 0.693  |
+|  cGAN with data augmentation  | 0.723  |
