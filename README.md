@@ -10,7 +10,7 @@ The baseline architecture was U-Net: [Convolutional Networks for Biomedical Imag
 ## cGAN-based Segmentation
 In order to improve the performance, I designed a conditional Generative Adversarial Network (cGAN) shown below. The generator design follows the encoder-decoder structure with skip-connections, originally introduced in U-Net. 
 ![alt text](https://github.com/babajide07/Cell-Nuclei-Segmentation-from-Histology-images-using-Conditional-Generative-Adversarial-Network-/blob/master/Results/gan_image.png)
-The discriminator on the other hand uses Patch information to resolve details in the prediction map. With cGAN, the dice similarity coefficient increases to 0.723
+The discriminator on the other hand uses Patch information to resolve details in the prediction map. With cGAN, the dice similarity coefficient increases to 0.723.
 ## Results
 ### Qualitative
 ![alt text](https://github.com/babajide07/Cell-Nuclei-Segmentation-from-Histology-images-using-Conditional-Generative-Adversarial-Network-/blob/master/Results/results.png)
