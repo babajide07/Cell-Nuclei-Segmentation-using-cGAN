@@ -11,9 +11,9 @@ The baseline architecture was U-Net: [Convolutional Networks for Biomedical Imag
 ![alt text](https://github.com/babajide07/Cell-Nuclei-Segmentation-from-Histology-images-using-Conditional-Generative-Adversarial-Network-/blob/master/Results/gan_image.png)
 
 ## Dependencies
-. Pytorch >= 0.4.0
-. Python >= 3.5
-. Numpy 
+ - [x] Pytorch >= 0.4.0
+ - [x] Python >= 3.5
+ - [x] Numpy 
 
 
 Run main.py
