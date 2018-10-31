@@ -1,4 +1,4 @@
-# Cell-Nuclei-Segmentation-from-Histology-images-using-Conditional-Generative-Adversarial-Network-Pytorch-Implementation
+# Cell-Nuclei-Segmentation-from-Histology-images-using-cGAN
 ## Overview
 ### Data
 The database consists of 50 512*512 image pairs and was split into 43 and 7 train and test sets, respectively. In order to use the code in this repository, the histology images and corresponding segmentation maps need to be merged as shown below.
