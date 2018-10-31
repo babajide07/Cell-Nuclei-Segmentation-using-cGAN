@@ -5,6 +5,6 @@ Pytorch Implementation
 
 | Model  | Dice Measure |
 | ------------- | ------------- |
-| Unet with no data augmentation  | 0.637  |
+| Unet with no data augmentation (Baseline) | 0.637  |
 |  Unet with data augmentation  | 0.693  |
 |  cGAN with data augmentation  | 0.723  |
