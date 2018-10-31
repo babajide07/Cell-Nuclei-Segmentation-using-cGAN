@@ -66,8 +66,8 @@ parser.add_argument('--img_height', type=int, default=512, help='size of image h
 parser.add_argument('--img_width', type=int, default=512, help='size of image width')
 parser.add_argument('--mod', type=int, default=3, help='generator saved index')
 parser.add_argument('--n_residual_blocks', type=int, default=6, help='number of residual blocks in generator')
+parser.add_argument('--path', type=str, default='/home/baba/Babajide_Research/EchoNus_project/gan_code/code/', help='path to code and data')
 
-path = '/home/baba/Babajide_Research/EchoNus_project/gan_code/code/'  #Path to code
 
 opt = parser.parse_args()
 print(opt)
@@ -76,7 +76,7 @@ transforms_ = [ transforms.Resize((opt.img_height, opt.img_width), Image.BICUBIC
                 transforms.ToTensor(),
                 transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5))]
 
-test_dataloader = DataLoader(ImageDataset("/home/baba/Babajide_Research/EchoNus_project/%s" % opt.dataset_name, transforms_=transforms_, mode="val"),
+test_dataloader = DataLoader(ImageDataset(opt.path + "Data/%s" % opt.dataset_name, transforms_=transforms_, mode="val"),
                           batch_size=1, shuffle=False, num_workers=1)
 
 # Initialize generator and discriminator
@@ -90,15 +90,15 @@ generator = GeneratorUNet()
 if cuda:
     generator = torch.nn.DataParallel(generator).cuda()
 
-generator.load_state_dict(torch.load(path + 'trained_model/generator.pth'))
+generator.load_state_dict(torch.load(opt.path + 'trained_model/generator.pth'))
 generator.eval()
 
 
 def main():
     elapse = []
-    os.makedirs(path + 'test_results/gt/', exist_ok=True)
-    os.makedirs(path + 'test_results/image/', exist_ok=True)
-    os.makedirs(path + 'test_results/pred_map/', exist_ok=True)
+    os.makedirs(opt.path + 'test_results/gt/', exist_ok=True)
+    os.makedirs(opt.path + 'test_results/image/', exist_ok=True)
+    os.makedirs(opt.path + 'test_results/pred_map/', exist_ok=True)
     for i, image in enumerate(test_dataloader):
         print('Testing image ', i)
         start = time.process_time()
@@ -106,15 +106,15 @@ def main():
         elapsed = (time.process_time() - start)
         elapse.append(elapsed)
         print(elapsed)
-        save_image(image['A'], path+'test_results/image/' + str(i) +'.jpg', normalize=True)
+        save_image(image['A'], opt.path +'test_results/image/' + str(i) +'.jpg', normalize=True)
     print('Average testing time is ', np.mean(elapse))
 
     #######################
     BER_avg   = []
     dice_avg = []
-    for file in glob.glob(path + 'test_results/gt/**/*.jpg', recursive=True):
+    for file in glob.glob(opt.path + 'test_results/gt/**/*.jpg', recursive=True):
         thresh = 200  # grayscale intensity
-        dice = evaluationMetric(file, thresh, path)
+        dice = evaluationMetric(file, thresh, opt.path)
         dice_avg.append(dice)
 
     print(sum(dice_avg) / float(len(dice_avg)))
