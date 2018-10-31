@@ -10,14 +10,6 @@ The baseline architecture was U-Net: [Convolutional Networks for Biomedical Imag
 ## GAN-based Segmentation
 ![alt text](https://github.com/babajide07/Cell-Nuclei-Segmentation-from-Histology-images-using-Conditional-Generative-Adversarial-Network-/blob/master/Results/gan_image.png)
 
-## Dependencies
- - [x] Pytorch >= 0.4.0
- - [x] Python >= 3.5
- - [x] Numpy 
-
-
-Run main.py
-You will see the predicted results of test image in data/membrane/test
 ## Results
 ### Qualitative
 ![alt text](https://github.com/babajide07/Cell-Nuclei-Segmentation-from-Histology-images-using-Conditional-Generative-Adversarial-Network-/blob/master/Results/results.png)
@@ -29,3 +21,16 @@ You will see the predicted results of test image in data/membrane/test
 |  Unet with data augmentation  | 0.693  |
 |  cGAN with data augmentation  | 0.723  |
 
+## Dependencies
+ - [x] Pytorch >= 0.4.0
+ - [x] Python >= 3.5
+ - [x] Numpy 
+
+## To train and reproduce the results:
+- [x] Set the path to the training and validation data
+- [x] Run main.py
+
+## For testing, run:
+- [x] Set the path to the trained model
+- [x] Run test.py
+- [x] Predicted maps from test image will be in /results
