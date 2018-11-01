@@ -1,7 +1,7 @@
 # Cell-Nuclei-Segmentation-from-Histology-images-using-cGAN
 ## Overview
 ### Data
-The database consists of 50 512*512 image pairs and was split into 43 and 7 train and test sets, respectively. In order to use the code in this repository, the histology images and corresponding segmentation maps need to be merged as shown below.
+The database consists of 50 512*512 image pairs and was split into 43 and 7 train and test sets (folders Slide_10 and Slide_11), respectively. In order to use the code in this repository, the histology images and corresponding segmentation maps need to be merged as shown below.
 ![alt text](https://github.com/babajide07/Cell-Nuclei-Segmentation-from-Histology-images-using-Conditional-Generative-Adversarial-Network-/blob/master/Results/Slide_11_11_2.png).
 
 ## Baseline
