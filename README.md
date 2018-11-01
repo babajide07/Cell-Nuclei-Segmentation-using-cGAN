@@ -28,10 +28,11 @@ The discriminator on the other hand uses patch information to resolve details in
  - [x] Numpy 
 
 ## To train and reproduce the results:
-- [x] Set the path to the training and validation data
-- [x] Run main.py
+- [x] Set path to the training and validation data and the code.
+- [x] Run main.py to train model using cGAN
+- [x] Run unet_train.py to train model using Unet
 
 ## For testing, run:
-- [x] Set the path to the trained model
+- [x] Set path to the trained model
 - [x] Run test.py
 - [x] Predicted maps from test image will be in /results
