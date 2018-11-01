@@ -9,14 +9,13 @@ import sys
 
 import torchvision.transforms as transforms
 from torchvision.utils import save_image
-
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torch.autograd import Variable
-from models import *
-from datasets import *
+from models import GeneratorUNet, weights_init_normal
+from datasets import ImageDataset
 from torch import optim
-
+from PIL import Image
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
@@ -91,12 +90,15 @@ print('len of val batch is: ', len(val_dataloader))
 # Tensor type
 Tensor = torch.cuda.FloatTensor if cuda else torch.FloatTensor
 
-def sample_images(batches_done):
+def sample_images(batches_done, path):
     """Saves a generated sample from the validation set"""
     imgs = next(iter(val_dataloader))
     real_A = Variable(imgs['A'].type(Tensor))
     real_B = Variable(imgs['B'].type(Tensor))
     pred_B = Unet(real_A)
+    os.makedirs(os.path.join(path, 'images/%s/img/' % opt.dataset_name), exist_ok=True)
+    os.makedirs(os.path.join(path, 'images/%s/gt/' % opt.dataset_name), exist_ok=True)
+    os.makedirs(os.path.join(path, 'images/%s/pred/' % opt.dataset_name), exist_ok=True)
     save_image(real_A, 'images/%s/img/%s_image.png' % (opt.dataset_name, batches_done), nrow=3, normalize=True, scale_each=True)
     save_image(real_B, 'images/%s/gt/%s_image.png' % (opt.dataset_name, batches_done), nrow=3, normalize=True, scale_each=True)
     save_image(pred_B, 'images/%s/pred/%s_image.png' % (opt.dataset_name, batches_done), nrow=3, normalize=True, scale_each=True)
@@ -144,7 +146,7 @@ for epoch in range(opt.epoch, opt.n_epochs):
 
         # If at sample interval save image
         if batches_done % opt.sample_interval == 0:
-            sample_images(batches_done)
+            sample_images(batches_done, opt.path)
 
     if opt.checkpoint_interval != -1 and epoch % opt.checkpoint_interval == 0:
         # Save model checkpoints

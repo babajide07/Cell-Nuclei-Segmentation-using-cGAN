@@ -17,9 +17,9 @@ from torch.autograd import Variable
 
 from torch.utils.data import Dataset
 from PIL import Image
-from models import *
+from models import GeneratorUNet
 
-from datasets import *
+from datasets import ImageDataset
 import numpy.matlib
 
 import torch.nn as nn
@@ -34,10 +34,10 @@ def dice_coeff(seg, gt):
 def sample_images(imgs, model, path, idx=None,save=False):
     """Saves a generated sample from the test set"""
     true_map = Variable(imgs['B'].type(Tensor))
-    save_image(true_map, os.path.join(path, 'test_results/gt/', str(idx), '.jpg'), normalize=True)
+    save_image(true_map, os.path.join(path, 'test_results/gt', str(idx)) +'.jpg', normalize=True)
     fake_B = model(Variable(imgs['A'].type(Tensor)))
     if save:
-        save_image(fake_B, os.path.join(path, 'test_results/pred_map/', str(idx) +'.jpg'), normalize=True)
+        save_image(fake_B, os.path.join(path, 'test_results/pred_map', str(idx)) +'.jpg', normalize=True)
     return fake_B
 
 
@@ -102,7 +102,7 @@ def main():
     for i, image in enumerate(test_dataloader):
         print('Testing image ', i)
         start = time.process_time()
-        sample_images(image, generator, path, idx=i, save=True)
+        sample_images(image, generator, opt.path, idx=i, save=True)
         elapsed = (time.process_time() - start)
         elapse.append(elapsed)
         print(elapsed)
