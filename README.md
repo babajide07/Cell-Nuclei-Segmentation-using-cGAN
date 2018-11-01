@@ -35,4 +35,4 @@ The discriminator on the other hand uses patch information to resolve details in
 ## For testing, run:
 - [x] Set path to the trained model
 - [x] Run test.py
-- [x] Predicted maps from test image will be in /results
+- [x] Predicted maps from test image will be in /test_results
