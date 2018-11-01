@@ -34,18 +34,18 @@ def dice_coeff(seg, gt):
 def sample_images(imgs, model, path, idx=None,save=False):
     """Saves a generated sample from the test set"""
     true_map = Variable(imgs['B'].type(Tensor))
-    save_image(true_map, path + 'test_results/gt/' + str(idx) + '.jpg', normalize=True)
+    save_image(true_map, os.path.join(path, 'test_results/gt/', str(idx), '.jpg'), normalize=True)
     fake_B = model(Variable(imgs['A'].type(Tensor)))
     if save:
-        save_image(fake_B, path + 'test_results/pred_map/' + str(idx) +'.jpg', normalize=True)
+        save_image(fake_B, os.path.join(path, 'test_results/pred_map/', str(idx) +'.jpg'), normalize=True)
     return fake_B
 
 
 def evaluationMetric(image, thresh, path):
     print(image)
-    path = path + 'test_results/pred_map/'
+    path = os.path.join(path, 'test_results/pred_map/')
     map_GT = Image.open(image)
-    map_pred = Image.open(path+image.split('/')[-1])
+    map_pred = Image.open(os.path.join(path, image.split('/')[-1]))
     w, h = map_GT.size
 
     # Binarize the prediction and groundtruth
@@ -66,7 +66,7 @@ parser.add_argument('--img_height', type=int, default=512, help='size of image h
 parser.add_argument('--img_width', type=int, default=512, help='size of image width')
 parser.add_argument('--mod', type=int, default=3, help='generator saved index')
 parser.add_argument('--n_residual_blocks', type=int, default=6, help='number of residual blocks in generator')
-parser.add_argument('--path', type=str, default='/home/baba/Babajide_Research/EchoNus_project/gan_code/code/', help='path to code and data')
+parser.add_argument('--path', type=str, default='/home/baba/EchoNus_project/code/', help='path to code and data')
 
 
 opt = parser.parse_args()
@@ -76,7 +76,7 @@ transforms_ = [ transforms.Resize((opt.img_height, opt.img_width), Image.BICUBIC
                 transforms.ToTensor(),
                 transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5))]
 
-test_dataloader = DataLoader(ImageDataset(opt.path + "Data/%s" % opt.dataset_name, transforms_=transforms_, mode="val"),
+test_dataloader = DataLoader(ImageDataset(os.path.join(opt.path, "Data/%s" % opt.dataset_name), transforms_=transforms_, mode="val"),
                           batch_size=1, shuffle=False, num_workers=1)
 
 # Initialize generator and discriminator
@@ -90,15 +90,15 @@ generator = GeneratorUNet()
 if cuda:
     generator = torch.nn.DataParallel(generator).cuda()
 
-generator.load_state_dict(torch.load(opt.path + 'trained_model/generator.pth'))
+generator.load_state_dict(torch.load(os.path.join(opt.path, 'trained_model/generator.pth')))
 generator.eval()
 
 
 def main():
     elapse = []
-    os.makedirs(opt.path + 'test_results/gt/', exist_ok=True)
-    os.makedirs(opt.path + 'test_results/image/', exist_ok=True)
-    os.makedirs(opt.path + 'test_results/pred_map/', exist_ok=True)
+    os.makedirs(os.path.join(opt.path, 'test_results/gt/'), exist_ok=True)
+    os.makedirs(os.path.join(opt.path, 'test_results/image/'), exist_ok=True)
+    os.makedirs(os.path.join(opt.path, 'test_results/pred_map/'), exist_ok=True)
     for i, image in enumerate(test_dataloader):
         print('Testing image ', i)
         start = time.process_time()
@@ -106,13 +106,13 @@ def main():
         elapsed = (time.process_time() - start)
         elapse.append(elapsed)
         print(elapsed)
-        save_image(image['A'], opt.path +'test_results/image/' + str(i) +'.jpg', normalize=True)
+        save_image(image['A'], os.path.join(opt.path,'test_results/image/', str(i) +'.jpg'), normalize=True)
     print('Average testing time is ', np.mean(elapse))
 
     #######################
     BER_avg   = []
     dice_avg = []
-    for file in glob.glob(opt.path + 'test_results/gt/**/*.jpg', recursive=True):
+    for file in glob.glob(os.path.join(opt.path, 'test_results/gt/**/*.jpg'), recursive=True):
         thresh = 200  # grayscale intensity
         dice = evaluationMetric(file, thresh, opt.path)
         dice_avg.append(dice)

@@ -35,7 +35,7 @@ parser.add_argument('--img_width', type=int, default=512, help='size of image wi
 parser.add_argument('--channels', type=int, default=3, help='number of image channels')
 parser.add_argument('--sample_interval', type=int, default=50, help='interval between sampling of images from generators')
 parser.add_argument('--checkpoint_interval', type=int, default=100, help='interval between model checkpoints')
-parser.add_argument('--path', type=str, default='/home/baba/Babajide_Research/EchoNus_project/gan_code/code/', help='path to code and data')
+parser.add_argument('--path', type=str, default='/home/baba/EchoNus_project/code/', help='path to code and data')
 
 opt = parser.parse_args()
 print(opt)
@@ -65,8 +65,8 @@ if cuda:
 
 if opt.epoch != 0:
     # Load pretrained models
-    generator.load_state_dict(torch.load(opt.path+'/saved_model/%s/generator_%d.pth' % (opt.dataset_name, opt.epoch)))
-    discriminator.load_state_dict(torch.load(opt.path+'/saved_model/%s/discriminator_%d.pth' % (opt.dataset_name, opt.epoch)))
+    generator.load_state_dict(torch.load(os.path.join(opt.path,'/saved_model/%s/generator_%d.pth' % (opt.dataset_name, opt.epoch))))
+    discriminator.load_state_dict(torch.load(os.path.join(opt.path,'/saved_model/%s/discriminator_%d.pth' % (opt.dataset_name, opt.epoch))))
 else:
     # Initialize weights
     generator.apply(weights_init_normal)
@@ -87,11 +87,11 @@ transforms_val = [transforms.Resize((opt.img_height, opt.img_width), Image.BICUB
                 transforms.ToTensor(),
                 transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5))]
 
-dataloader = DataLoader(ImageDataset(opt.path+"Data/%s" % opt.dataset_name, transforms_=transforms_),
+dataloader = DataLoader(ImageDataset(os.path.join(opt.path, "Data/%s" % opt.dataset_name), transforms_=transforms_),
                         batch_size=opt.batch_size, shuffle=True, num_workers=opt.n_cpu)
 
 print('len of train batch is: ', len(dataloader))
-val_dataloader = DataLoader(ImageDataset(opt.path+"Data/%s" % opt.dataset_name, transforms_=transforms_val, mode='val'),
+val_dataloader = DataLoader(ImageDataset(os.path.join(opt.path, "Data/%s" % opt.dataset_name), transforms_=transforms_val, mode='val'),
                             batch_size=1, shuffle=True, num_workers=1)
 print('len of val batch is: ', len(val_dataloader))
 # Tensor type
@@ -187,5 +187,5 @@ for epoch in range(opt.epoch, opt.n_epochs):
 
     if opt.checkpoint_interval != -1 and epoch % opt.checkpoint_interval == 0:
         # Save model checkpoints
-        torch.save(generator.state_dict(), opt.path+'saved_model/%s/generator_%d.pth' % (opt.dataset_name, epoch))
-        torch.save(discriminator.state_dict(), opt.path+'saved_model/%s/discriminator_%d.pth' % (opt.dataset_name, epoch))
+        torch.save(generator.state_dict(), os.path.join(opt.path, 'saved_model/%s/generator_%d.pth' % (opt.dataset_name, epoch)))
+        torch.save(discriminator.state_dict(), os.path.join(opt.path, 'saved_model/%s/discriminator_%d.pth' % (opt.dataset_name, epoch)))
